@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ArcheroLike.Units
+namespace ArcheroLike.Units.Enemies
 {
     [RequireComponent(typeof(Health))]
     public abstract class AbstractEnemy : MonoBehaviour
@@ -11,11 +11,13 @@ namespace ArcheroLike.Units
 
         protected Health _health;
         protected float _lastAttackTime;
+        protected bool _isAlive = true;
 
-        public event Action EnemyDied;
+        public static event Action<AbstractEnemy> EnemyDied;
 
         public float AttackSpeed => _attackSpeed;
         public float AttackDamage => _attackDamage;
+        public bool IsAlive => _isAlive;
 
         protected void Start()
         {
@@ -23,8 +25,11 @@ namespace ArcheroLike.Units
             _health.CurrentHealth = _health.MaxHealth;
         }
 
-        protected void TakeDamage(float damage)
+        public void TakeDamage(float damage)
         {
+            if (!_isAlive)
+                return;
+
             _health.CurrentHealth -= damage;
             if (_health.CurrentHealth <= 0)
                 Die();
@@ -32,7 +37,8 @@ namespace ArcheroLike.Units
 
         protected virtual void Die()
         {
-            EnemyDied?.Invoke();
+            _isAlive = false;
+            EnemyDied?.Invoke(this);
         }
     }
 }

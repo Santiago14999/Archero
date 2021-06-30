@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ArcheroLike.Player
+namespace ArcheroLike.Units.Player
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMovement : MonoBehaviour
@@ -23,6 +23,11 @@ namespace ArcheroLike.Player
         void Update()
         {
             HandleMovement();
+        }
+
+        public void FaceTarget(Transform target)
+        {
+            transform.LookAt(target);
         }
 
         void HandleMovement()

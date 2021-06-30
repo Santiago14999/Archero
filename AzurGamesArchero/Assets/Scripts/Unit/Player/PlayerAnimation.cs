@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ArcheroLike.Player
+namespace ArcheroLike.Units.Player
 {
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimation : MonoBehaviour

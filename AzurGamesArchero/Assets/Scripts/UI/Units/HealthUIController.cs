@@ -68,7 +68,11 @@ namespace ArcheroLike.UI
         {
             if (_unitsHealthUI.ContainsKey(unit))
             {
-                Destroy(_unitsHealthUI[unit].gameObject);
+                HealthUI ui = _unitsHealthUI[unit];
+                if (ui != null)
+                {
+                    Destroy(ui.gameObject);
+                }
                 _unitsHealthUI.Remove(unit);
             }
         }
