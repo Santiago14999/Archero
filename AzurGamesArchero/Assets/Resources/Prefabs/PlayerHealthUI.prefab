@@ -201,4 +201,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 6769075212022250234}
-  _height: 120
+  _healthBarHeight: 240

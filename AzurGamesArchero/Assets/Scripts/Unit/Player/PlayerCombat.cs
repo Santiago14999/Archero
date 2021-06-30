@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace ArcheroLike.Player
 {
-    [RequireComponent(typeof(PlayerMovement))]
-    public class PlayerCombat : AbstractEnemy
+    [RequireComponent(typeof(PlayerMovement), typeof(Health))]
+    public class PlayerCombat : MonoBehaviour
     {
         PlayerMovement _playerMovement;
         bool _isMoving = false;

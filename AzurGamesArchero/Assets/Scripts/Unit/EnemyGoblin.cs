@@ -7,7 +7,7 @@ namespace ArcheroLike.Units
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.K))
-                CurrentHealth -= 10f;
+                TakeDamage(10f);
         }
         protected override void Die()
         {
