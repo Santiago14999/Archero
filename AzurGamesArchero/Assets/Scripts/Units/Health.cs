@@ -10,13 +10,18 @@ namespace ArcheroLike.Units
         [SerializeField] float _maxHealth = 100f;
         float _currentHealth;
 
-        public float MaxHealth => _maxHealth;
+        public float MaxHealth
+        {
+            get => _maxHealth;
+            set => _maxHealth = value;
+        }
+
         public float CurrentHealth
         {
             get => _currentHealth;
             set
             {
-                _currentHealth = value;
+                _currentHealth = Mathf.Clamp(value, 0, _maxHealth);
                 HealthChanged?.Invoke();
             }
         }

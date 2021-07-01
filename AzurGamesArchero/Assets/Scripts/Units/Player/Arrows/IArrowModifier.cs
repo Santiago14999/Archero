@@ -2,6 +2,6 @@
 {
     public interface IArrowModifier
     {
-        void ModifierAction(Enemies.AbstractEnemy enemy);
+        void ModifierAction(Arrow arrow);
     }
 }

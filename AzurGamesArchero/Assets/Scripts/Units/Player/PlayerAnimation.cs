@@ -12,19 +12,24 @@ namespace ArcheroLike.Units.Player
         void Awake()
         {
             _animator = GetComponent<Animator>();
-            if (TryGetComponent<PlayerMovement>(out _playerMovement))
+            if (TryGetComponent(out _playerMovement))
             {
                 _playerMovement.MovingStateChanged += UpdateMovingState;
             }
-            if (TryGetComponent<PlayerCombat>(out _playerCombat))
+            if (TryGetComponent(out _playerCombat))
             {
-                
+                _playerCombat.PlayerShot += OnPlayerShot;
             }
         }
 
         void UpdateMovingState(bool moving)
         {
             _animator.SetBool("Moving", moving);
+        }
+        
+        void OnPlayerShot()
+        {
+            _animator.SetTrigger("Shoot");
         }
     }
 }

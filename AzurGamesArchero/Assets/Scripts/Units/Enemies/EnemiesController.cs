@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace ArcheroLike.Units.Enemies
@@ -22,6 +21,8 @@ namespace ArcheroLike.Units.Enemies
                 return _instance;
             }
         }
+
+        public List<AbstractEnemy> Enemies => _enemies.FindAll(x => x.IsAlive);
 
         bool _isInit = false;
 
@@ -57,19 +58,8 @@ namespace ArcheroLike.Units.Enemies
         public void DestroyEnemy(AbstractEnemy enemy)
         {
             _enemies.Remove(enemy);
-            Destroy(enemy.gameObject);
         }
 
         public bool HasEnemy() => _enemies.Count > 0;
-
-        public AbstractEnemy GetClosestEnemy(Vector3 from)
-        {
-            return _enemies.OrderBy(x => Vector3.SqrMagnitude(from - x.transform.position)).FirstOrDefault();
-        }
-
-        public AbstractEnemy GetClosestEnemy(AbstractEnemy from)
-        {
-            return _enemies.OrderBy(x => Vector3.SqrMagnitude(from.transform.position - x.transform.position)).First(x => x != from);
-        }
     }
 }

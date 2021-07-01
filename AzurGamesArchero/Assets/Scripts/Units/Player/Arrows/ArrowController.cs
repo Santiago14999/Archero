@@ -29,7 +29,6 @@ namespace ArcheroLike.Units.Player
                 return _instance;
             }
         }
-
         public List<IArrowModifier> ArrowModifiers => _modifiers;
 
         void Init()
@@ -51,6 +50,6 @@ namespace ArcheroLike.Units.Player
             arrow.Init(_arrowSpeed);
         }
 
-        public float GetArrowDamage() => Random.Range(0f, 1f) < _critChance ? _damage * 2 : _damage;
+        public float GetArrowDamage() => Random.Range(0f, 1f) <= _critChance ? _damage * 2 : _damage;
     }
 }

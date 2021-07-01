@@ -6,7 +6,7 @@ namespace ArcheroLike.Units.Enemies
     [RequireComponent(typeof(Health))]
     public abstract class AbstractEnemy : MonoBehaviour
     {
-        [SerializeField] protected float _attackSpeed;
+        [SerializeField] protected float _attackCooldown;
         [SerializeField] protected float _attackDamage;
 
         protected Health _health;
@@ -14,25 +14,31 @@ namespace ArcheroLike.Units.Enemies
         protected bool _isAlive = true;
 
         public static event Action<AbstractEnemy> EnemyDied;
+        public event Action EnemyDamaged;
 
-        public float AttackSpeed => _attackSpeed;
+        public float AttackCooldown => _attackCooldown;
         public float AttackDamage => _attackDamage;
         public bool IsAlive => _isAlive;
+        public float Health
+        {
+            get => _health.CurrentHealth;
+            set
+            {
+                if (!_isAlive)
+                    return;
+
+                _health.CurrentHealth = value;
+                if (_health.CurrentHealth <= 0)
+                    Die();
+                else
+                    EnemyDamaged?.Invoke();
+            }
+        }
 
         protected void Start()
         {
             _health = GetComponent<Health>();
             _health.CurrentHealth = _health.MaxHealth;
-        }
-
-        public void TakeDamage(float damage)
-        {
-            if (!_isAlive)
-                return;
-
-            _health.CurrentHealth -= damage;
-            if (_health.CurrentHealth <= 0)
-                Die();
         }
 
         protected virtual void Die()

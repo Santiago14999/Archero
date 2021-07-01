@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using ArcheroLike.Units.Enemies;
 
 namespace ArcheroLike.Units.Player
 {
@@ -6,6 +7,9 @@ namespace ArcheroLike.Units.Player
     public class Arrow : MonoBehaviour
     {
         float _speed;
+
+        public AbstractEnemy HitEnemy { get; private set; }
+        public float DealtDamage { get; private set; }
 
         public void Init(float speed)
         {
@@ -26,13 +30,14 @@ namespace ArcheroLike.Units.Player
             Destroy(gameObject);
         }
 
-        void OnHitEnemy(Enemies.AbstractEnemy enemy)
+        void OnHitEnemy(AbstractEnemy enemy)
         {
             ArrowController arrowController = ArrowController.Instance;
-            enemy.TakeDamage(arrowController.GetArrowDamage());
-            var modifiers = arrowController.ArrowModifiers;
-            foreach (var modifier in modifiers)
-                modifier.ModifierAction(enemy);
+            float damage = arrowController.GetArrowDamage();
+            enemy.Health -= damage;
+            HitEnemy = enemy;
+            DealtDamage = damage;
+            arrowController.ArrowModifiers.ForEach(x => x.ModifierAction(this));
         }
     }
 }
