@@ -24,7 +24,7 @@ namespace ArcheroLike.Units.Player
 
         void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.TryGetComponent<Enemies.AbstractEnemy>(out var enemy))
+            if (collision.gameObject.TryGetComponent<AbstractEnemy>(out var enemy))
             {
                 OnHitEnemy(enemy);
             }

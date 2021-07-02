@@ -23,6 +23,10 @@ namespace ArcheroLike.Units.Player
             _playerMovement = GetComponent<PlayerMovement>();
             _playerMovement.MovingStateChanged += UpdateMovingState;
             AbstractEnemy.EnemyDied += OnEnemyDied;
+        }
+
+        private void Start()
+        {
             UpdateMovingState(false);
         }
 
