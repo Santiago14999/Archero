@@ -8,6 +8,7 @@ namespace ArcheroLike.Units.Enemies
     {
         [SerializeField] protected float _attackCooldown;
         [SerializeField] protected float _attackDamage;
+        [SerializeField] protected int _experience;
 
         protected bool _isAlive;
         protected Health _health;
@@ -15,11 +16,13 @@ namespace ArcheroLike.Units.Enemies
 
         public static event Action<AbstractEnemy> EnemyDied;
         public event Action EnemyDamaged;
+        public event Action EnemyAttacked;
 
         public float AttackCooldown => _attackCooldown;
         public float AttackDamage => _attackDamage;
         public bool IsAlive => _isAlive;
         public Health Health => _health;
+        public int Experience => _experience;
 
         protected void Start()
         {
@@ -28,6 +31,18 @@ namespace ArcheroLike.Units.Enemies
             _health.CurrentHealth = _health.MaxHealth;
             _health.HealthChanged += OnHealthChanged;
         }
+
+        protected void HandleAttack()
+        {
+            if (_lastAttackTime + _attackCooldown <= Time.time)
+            {
+                _lastAttackTime = Time.time;
+                EnemyAttacked?.Invoke();
+                Attack();
+            }
+        }
+
+        protected abstract void Attack();
 
         protected void OnHealthChanged()
         {
@@ -39,6 +54,7 @@ namespace ArcheroLike.Units.Enemies
                     EnemyDamaged?.Invoke();
             }
         }
+
 
         protected virtual void Die()
         {

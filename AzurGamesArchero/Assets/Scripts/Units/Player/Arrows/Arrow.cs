@@ -9,11 +9,12 @@ namespace ArcheroLike.Units.Player
         float _speed;
 
         public AbstractEnemy HitEnemy { get; private set; }
-        public float DealtDamage { get; private set; }
+        public float Damage { get; private set; }
 
-        public void Init(float speed)
+        public void Init(float speed, float damage)
         {
             _speed = speed;
+            Damage = damage;
         }
 
         void Update()
@@ -33,10 +34,8 @@ namespace ArcheroLike.Units.Player
         void OnHitEnemy(AbstractEnemy enemy)
         {
             ArrowController arrowController = ArrowController.Instance;
-            float damage = arrowController.GetArrowDamage();
-            enemy.Health.CurrentHealth -= damage;
+            enemy.Health.CurrentHealth -= Damage;
             HitEnemy = enemy;
-            DealtDamage = damage;
             arrowController.ArrowModifiers.ForEach(x => x.ModifierAction(this));
         }
     }

@@ -9,8 +9,6 @@ namespace ArcheroLike.Units.Enemies
         [SerializeField] Projectiles.GoblinRockProjectile _rock;
         [SerializeField] Transform _rockSpawnPoint;
 
-        public event Action EnemyAttacked;
-
         void Awake()
         {
             SetRagdoll(false);
@@ -24,17 +22,7 @@ namespace ArcheroLike.Units.Enemies
             HandleAttack();
         }
 
-        void HandleAttack()
-        {
-            if (_lastAttackTime + _attackCooldown <= Time.time)
-            {
-                _lastAttackTime = Time.time;
-                EnemyAttacked?.Invoke();
-                Attack();
-            }
-        }
-
-        void Attack()
+        protected override void Attack()
         {
             var player = FindObjectOfType<Player.PlayerHealth>();
             transform.LookAt(player.transform);

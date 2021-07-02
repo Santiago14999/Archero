@@ -47,7 +47,7 @@ namespace ArcheroLike.Units.Player
         public void SpawnArrow(Vector3 position, Quaternion rotation)
         {
             Arrow arrow = Instantiate(_arrow, position, rotation);
-            arrow.Init(_arrowSpeed);
+            arrow.Init(_arrowSpeed, GetArrowDamage());
         }
 
         public float GetArrowDamage() => Random.Range(0f, 1f) <= _critChance ? _damage * 2 : _damage;

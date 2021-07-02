@@ -10,7 +10,7 @@ namespace ArcheroLike.Units.Player
         public void ModifierAction(Arrow arrow)
         {
             var playerHealth = FindObjectOfType<PlayerHealth>();
-            playerHealth.Health.CurrentHealth += arrow.DealtDamage * _vampirismPercent;
+            playerHealth.Health.CurrentHealth += arrow.Damage * _vampirismPercent;
         }
     }
 }
