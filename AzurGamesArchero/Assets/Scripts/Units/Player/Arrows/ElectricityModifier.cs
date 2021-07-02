@@ -26,7 +26,7 @@ namespace ArcheroLike.Units.Player
 
             for (int i = 0; i < _chainCount; i++)
             {
-                currentEnemy.Health -= currentDamage;
+                currentEnemy.Health.CurrentHealth -= currentDamage;
                 affectedEnemies.Add(currentEnemy);
 
                 currentDamage *= _chainDamageReduction;

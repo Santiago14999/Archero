@@ -34,7 +34,7 @@ namespace ArcheroLike.Units.Player
         {
             ArrowController arrowController = ArrowController.Instance;
             float damage = arrowController.GetArrowDamage();
-            enemy.Health -= damage;
+            enemy.Health.CurrentHealth -= damage;
             HitEnemy = enemy;
             DealtDamage = damage;
             arrowController.ArrowModifiers.ForEach(x => x.ModifierAction(this));

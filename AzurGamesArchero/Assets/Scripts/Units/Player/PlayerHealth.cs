@@ -9,32 +9,22 @@ namespace ArcheroLike.Units.Player
         public event Action PlayerDied;
 
         Health _health;
-        bool _isAlive = true;
+        bool _isAlive;
 
-        public float Health
-        {
-            get => _health.CurrentHealth;
-            set
-            {
-                if (!_isAlive)
-                    return;
-
-                _health.CurrentHealth = value;
-                if (_health.CurrentHealth <= 0)
-                    Die();
-            }
-        }
-
-        public float MaxHealth
-        {
-            get => _health.MaxHealth;
-            set => _health.MaxHealth = value;
-        }
+        public Health Health => _health;
 
         void Start()
         {
+            _isAlive = true;
             _health = GetComponent<Health>();
             _health.CurrentHealth = _health.MaxHealth;
+            _health.HealthChanged += OnHealthChanged;
+        }
+
+        void OnHealthChanged()
+        {
+            if (_isAlive && _health.CurrentHealth <= 0f)
+                Die();
         }
 
         void Die()

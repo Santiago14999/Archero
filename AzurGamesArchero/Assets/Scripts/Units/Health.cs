@@ -7,13 +7,17 @@ namespace ArcheroLike.Units
     {
         public event Action HealthChanged;
 
-        [SerializeField] float _maxHealth = 100f;
-        float _currentHealth;
+        [SerializeField] protected float _maxHealth = 100f;
+        protected float _currentHealth;
 
         public float MaxHealth
         {
             get => _maxHealth;
-            set => _maxHealth = value;
+            set
+            {
+                _maxHealth = value;
+                HealthChanged?.Invoke();
+            }
         }
 
         public float CurrentHealth

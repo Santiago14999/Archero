@@ -6,6 +6,9 @@ namespace ArcheroLike.Units.Enemies
 {
     public class EnemyGoblin : AbstractEnemy
     {
+        [SerializeField] Projectiles.GoblinRockProjectile _rock;
+        [SerializeField] Transform _rockSpawnPoint;
+
         public event Action EnemyAttacked;
 
         void Awake()
@@ -35,7 +38,8 @@ namespace ArcheroLike.Units.Enemies
         {
             var player = FindObjectOfType<Player.PlayerHealth>();
             transform.LookAt(player.transform);
-            
+            var rock = Instantiate(_rock, _rockSpawnPoint.position, Quaternion.identity);
+            rock.Init(_health, _rockSpawnPoint.position, player.transform.position, _attackDamage);
         }
 
         protected override void Die()
