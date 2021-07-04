@@ -1,3 +1,5 @@
+using UnityEngine.SceneManagement;
+
 namespace ArcheroLike.UI
 {
     public class MainMenuWindow : AbstractMenuWindow
@@ -8,12 +10,12 @@ namespace ArcheroLike.UI
         {
             base.Awake();
             AddButtonListener("PlayButton", OnPlayButtonPressed);
-            AddButtonListener("SettingsButton", OnSettingsButtonPressed);
+            //AddButtonListener("SettingsButton", OnSettingsButtonPressed);
         }
 
         void OnPlayButtonPressed()
         {
-
+            SceneManager.LoadScene(1);
         }
 
         void OnSettingsButtonPressed()

@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
 using ArcheroLike.Units.Enemies;
 
-namespace ArcheroLike.Units.Player
+namespace ArcheroLike.Projectiles.PlayerArrows
 {
     [CreateAssetMenu(fileName = "LightningModifier", menuName = "ArrowModifiers/LightningModifier")]
     public class LightningModifier : ScriptableObject, IArrowModifier

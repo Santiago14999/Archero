@@ -16,6 +16,6 @@ MonoBehaviour:
   LightningFirstDamage: 20
   ChainCount: 3
   ChainDamageReduction: 0.35
-  MaxChainRange: 1000
+  MaxChainDistance: 100
   ProcChance: 1
   TransitionTime: 0.1

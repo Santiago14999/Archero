@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace ArcheroLike.Units.Player
+namespace ArcheroLike.Projectiles.PlayerArrows
 {
     public class LightningEntity : MonoBehaviour
     {
@@ -16,9 +16,11 @@ namespace ArcheroLike.Units.Player
         Vector3 _nextEnemyPos;
 
         List<AbstractEnemy> _affectedEnemies;
+        ArrowController _arrowController;
 
         public void Init(LightningModifier settings, AbstractEnemy firstEnemy)
         {
+            _arrowController = ArrowController.Instance;
             _settings = settings;
             _currentDamage = settings.LightningFirstDamage;
             _currentChain = 0;
@@ -59,6 +61,7 @@ namespace ArcheroLike.Units.Player
         {
             _lastHitTime = Time.time;
             _target.Health.CurrentHealth -= _currentDamage;
+            _arrowController.DealtDamage(_currentDamage);
             _currentDamage *= _settings.ChainDamageReduction;
             _affectedEnemies.Add(_target);
             _prevEnemyPos = _target.transform.position;

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace ArcheroLike.Units.Player
+namespace ArcheroLike.Projectiles.PlayerArrows
 {
     public class ArrowController : MonoBehaviour
     {
+        public event System.Action<float> PlayerDealtDamage;
+
         [SerializeField] Arrow _arrow;
         [SerializeField] float _arrowSpeed = 10f;
         [SerializeField] float _stockDamage = 20f;
@@ -51,5 +53,7 @@ namespace ArcheroLike.Units.Player
         }
 
         public float GetArrowDamage() => Random.Range(0f, 1f) <= _critChance ? _damage * 2 : _damage;
+
+        public void DealtDamage(float damage) => PlayerDealtDamage?.Invoke(damage);
     }
 }

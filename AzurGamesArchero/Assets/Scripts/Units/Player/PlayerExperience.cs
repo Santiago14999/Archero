@@ -5,7 +5,7 @@ namespace ArcheroLike.Units.Player
 {
     public class PlayerExperience : MonoBehaviour
     {
-        public event Action PlayerGainExperience;
+        public event Action PlayerGainedExperience;
         public event Action PlayerLeveledUp;
 
         int _level;
@@ -23,7 +23,7 @@ namespace ArcheroLike.Units.Player
                     _level++;
                     PlayerLeveledUp?.Invoke();
                 }
-                PlayerGainExperience?.Invoke();
+                PlayerGainedExperience?.Invoke();
             }
         }
         public int NextLevelExperience => _level * 2;

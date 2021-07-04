@@ -7,7 +7,7 @@ public class ExperienceUI : MonoBehaviour
     [SerializeField] TMPro.TMP_Text _expText;
     [SerializeField] TMPro.TMP_Text _levelText;
 
-    public void UpdateUI(int level, int currentExp, int maxExp)
+    public void UpdateExpUI(int level, int currentExp, int maxExp)
     {
         _expBar.fillAmount = currentExp / (float)maxExp;
         _expText.text = $"{currentExp}/{maxExp}";

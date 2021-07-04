@@ -6,18 +6,20 @@ namespace ArcheroLike.UI
 {
     public class NotificationContainer : MonoBehaviour
     {
-        [SerializeField] Vector3 _hidingPosition; //TODO: Rect transform
-        [SerializeField] Vector3 _showingPosition; //TODO: Rect transform
+        [SerializeField] Vector2 _hidingPosition;
+        [SerializeField] Vector2 _showingPosition;
         [SerializeField] float _popupTime;
 
-        Text _notifictaionText;
+        TMPro.TMP_Text _notifictaionText;
         Coroutine _animationCoroutine;
+        RectTransform _rectTransform;
 
         public void ShowMessage(string messageText, float duration)
         {
             if (_notifictaionText == null)
             {
-                _notifictaionText = GetComponentInChildren<Text>();
+                _rectTransform = GetComponent<RectTransform>();
+                _notifictaionText = GetComponentInChildren<TMPro.TMP_Text>();
                 if (_notifictaionText == null)
                 {
                     Debug.LogError("Notification container must contain a child with Text component.");
@@ -34,24 +36,26 @@ namespace ArcheroLike.UI
 
         IEnumerator NotificationAnimationCorotuine(float duration)
         {
-            transform.position = _hidingPosition;
+            _rectTransform.anchoredPosition = _hidingPosition;
             float endTime = Time.time + _popupTime;
             while (endTime > Time.time)
             {
-                transform.position = Vector3.Lerp(_hidingPosition, _showingPosition, 1f - ((endTime - Time.time) / _popupTime));
+                _rectTransform.anchoredPosition = Vector3.Lerp(_hidingPosition, _showingPosition, 1f - ((endTime - Time.time) / _popupTime));
                 yield return new WaitForEndOfFrame();
             }
 
-            transform.position = _showingPosition;
+            _rectTransform.anchoredPosition = _showingPosition;
 
             yield return new WaitForSeconds(duration);
 
             endTime = Time.time + _popupTime;
             while (endTime > Time.time)
             {
-                transform.position = Vector3.Lerp(_showingPosition, _hidingPosition, 1f - ((endTime - Time.time) / _popupTime));
+                _rectTransform.anchoredPosition = Vector3.Lerp(_showingPosition, _hidingPosition, 1f - ((endTime - Time.time) / _popupTime));
                 yield return new WaitForEndOfFrame();
             }
+
+            _rectTransform.anchoredPosition = _hidingPosition;
 
             _animationCoroutine = null;
         }

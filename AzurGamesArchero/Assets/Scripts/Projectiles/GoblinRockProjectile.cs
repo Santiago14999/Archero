@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using ArcheroLike.Units;
 
-namespace ArcheroLike.Units.Projectiles
+namespace ArcheroLike.Projectiles
 {
-    public class GoblinRockProjectile : MonoBehaviour
+    public class GoblinRockProjectile : AbstractProjectile
     {
         [SerializeField] float _speed = 10f;
         [SerializeField] float _rotationSpeed = 10f;
@@ -46,7 +47,7 @@ namespace ArcheroLike.Units.Projectiles
             transform.Rotate(Vector3.one * _rotationSpeed * Time.deltaTime);
         }
 
-        void OnCollisionEnter(Collision collision)
+        protected override void OnHit(Collider collision)
         {
             if (collision.gameObject.TryGetComponent<Health>(out var health))
             {

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 using ArcheroLike.Units.Enemies;
+using ArcheroLike.Projectiles.PlayerArrows;
 using System;
 
 namespace ArcheroLike.Units.Player
@@ -11,11 +12,13 @@ namespace ArcheroLike.Units.Player
         public event Action PlayerShot;
 
         [SerializeField] float _attackCooldown = 1f;
+        [SerializeField] float _findEnemyCooldown = .5f;
         [SerializeField] Transform _arrowSpawnPoint;
 
         AbstractEnemy _currentTarget;
         PlayerMovement _playerMovement;
         float _lastShotTime;
+        float _lastFindTime;
         bool _isMoving = false;
 
         void Awake()
@@ -25,7 +28,7 @@ namespace ArcheroLike.Units.Player
             AbstractEnemy.EnemyDied += OnEnemyDied;
         }
 
-        private void Start()
+        void Start()
         {
             UpdateMovingState(false);
         }
@@ -63,8 +66,15 @@ namespace ArcheroLike.Units.Player
 
         void Update()
         {
-            if (!_isMoving)
-                HandleShooting();
+            if (_isMoving)
+                return;
+
+            if (_currentTarget == null && _lastFindTime + _findEnemyCooldown <= Time.time)
+            {
+                TryFindTarget();
+                _lastFindTime = Time.time;
+            }
+            HandleShooting();
         }
 
         void HandleShooting()

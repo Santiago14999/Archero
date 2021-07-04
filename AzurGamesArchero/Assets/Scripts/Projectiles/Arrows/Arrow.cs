@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using ArcheroLike.Units.Enemies;
 
-namespace ArcheroLike.Units.Player
+namespace ArcheroLike.Projectiles.PlayerArrows
 {
     [RequireComponent(typeof(Collider))]
-    public class Arrow : MonoBehaviour
+    public class Arrow : AbstractProjectile
     {
         float _speed;
 
@@ -22,7 +22,7 @@ namespace ArcheroLike.Units.Player
             transform.Translate(Vector3.forward * _speed * Time.deltaTime);
         }
 
-        void OnCollisionEnter(Collision collision)
+        protected override void OnHit(Collider collision)
         {
             if (collision.gameObject.TryGetComponent<AbstractEnemy>(out var enemy))
             {
@@ -35,6 +35,7 @@ namespace ArcheroLike.Units.Player
         {
             ArrowController arrowController = ArrowController.Instance;
             enemy.Health.CurrentHealth -= Damage;
+            arrowController.DealtDamage(Damage);
             HitEnemy = enemy;
             arrowController.ArrowModifiers.ForEach(x => x.ModifierAction(this));
         }

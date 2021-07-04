@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 namespace ArcheroLike.Units.Enemies
 {
@@ -22,31 +24,14 @@ namespace ArcheroLike.Units.Enemies
             }
         }
 
-        public List<AbstractEnemy> Enemies => _enemies.FindAll(x => x.IsAlive);
-
         bool _isInit = false;
 
-        void Awake()
-        {
-#if UNITY_EDITOR
-            if (!_isInit)
-                Init();
-
-            foreach (var enemy in FindObjectsOfType<AbstractEnemy>())
-                _enemies.Add(enemy);
-#endif
-        }
+        public List<AbstractEnemy> Enemies => _enemies.FindAll(x => x.IsAlive);
 
         void Init()
         {
             _isInit = true;
             _enemies = new List<AbstractEnemy>();
-            AbstractEnemy.EnemyDied += DestroyEnemy;
-        }
-
-        void OnDestroy()
-        {
-            AbstractEnemy.EnemyDied -= DestroyEnemy;
         }
 
         public void SpawnEnemy(AbstractEnemy enemy, Vector3 position, Quaternion rotation)
@@ -55,11 +40,12 @@ namespace ArcheroLike.Units.Enemies
             _enemies.Add(spawnedEnemy);
         }
 
-        public void DestroyEnemy(AbstractEnemy enemy)
+        public void DestroyEnemies()
         {
-            _enemies.Remove(enemy);
+            _enemies.ForEach(x => Destroy(x.gameObject));
+            _enemies.Clear();
         }
 
-        public bool HasEnemy() => _enemies.Count > 0;
+        public bool HasEnemy() => _enemies.Any(x => x.IsAlive);
     }
 }

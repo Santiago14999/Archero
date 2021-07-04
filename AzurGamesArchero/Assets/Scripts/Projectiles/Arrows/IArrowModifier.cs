@@ -1,4 +1,4 @@
-﻿namespace ArcheroLike.Units.Player
+﻿namespace ArcheroLike.Projectiles.PlayerArrows
 {
     public interface IArrowModifier
     {

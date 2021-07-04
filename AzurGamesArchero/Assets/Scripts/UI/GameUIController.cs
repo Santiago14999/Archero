@@ -12,13 +12,13 @@ namespace ArcheroLike.UI
         {
             _expUI = FindObjectOfType<ExperienceUI>();
             _playerExp = FindObjectOfType<PlayerExperience>();
-            _playerExp.PlayerGainExperience += OnPlayerGainExperience;
-            OnPlayerGainExperience();
+            _playerExp.PlayerGainedExperience += OnPlayerGainedExperience;
+            OnPlayerGainedExperience();
         }
 
-        void OnPlayerGainExperience()
+        void OnPlayerGainedExperience()
         {
-            _expUI.UpdateUI(_playerExp.Level, _playerExp.Experience, _playerExp.NextLevelExperience);
+            _expUI.UpdateExpUI(_playerExp.Level, _playerExp.Experience, _playerExp.NextLevelExperience);
         }
     }
 }
